@@ -1,0 +1,6 @@
+@NoteFlow_HostAddress = http://localhost:5115
+
+GET {{NoteFlow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

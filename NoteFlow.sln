@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlow.API", "NoteFlow.API\NoteFlow.API.csproj", "{B4C1FD89-048E-48E1-8CCD-646ABE6ABA2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlow.BLL", "NoteFlow.BLL\NoteFlow.BLL.csproj", "{6B282693-AD8E-4613-8958-431D9B4BEEE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlow.DAL", "NoteFlow.DAL\NoteFlow.DAL.csproj", "{79AB2D8C-C9DC-4536-AF87-C043F0D4927C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4C1FD89-048E-48E1-8CCD-646ABE6ABA2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C1FD89-048E-48E1-8CCD-646ABE6ABA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C1FD89-048E-48E1-8CCD-646ABE6ABA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C1FD89-048E-48E1-8CCD-646ABE6ABA2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B282693-AD8E-4613-8958-431D9B4BEEE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B282693-AD8E-4613-8958-431D9B4BEEE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B282693-AD8E-4613-8958-431D9B4BEEE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B282693-AD8E-4613-8958-431D9B4BEEE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79AB2D8C-C9DC-4536-AF87-C043F0D4927C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79AB2D8C-C9DC-4536-AF87-C043F0D4927C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79AB2D8C-C9DC-4536-AF87-C043F0D4927C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79AB2D8C-C9DC-4536-AF87-C043F0D4927C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
