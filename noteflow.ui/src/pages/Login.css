@@ -1,0 +1,24 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    background-color: #F2F7FE;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.side-image {
+    width: 50%;
+    height: 100vh;
+    object-fit: cover;
+}
