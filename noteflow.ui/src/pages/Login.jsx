@@ -14,10 +14,12 @@ const Login = () => {
                 <AuthForm title="Авторизация">
                     <input type="email" placeholder="Email"/>
                     <input type="password" placeholder={"Пароль"}/>
+
                     <div className="linkDiv">
                         <p>Нет аккаунта?</p>
                         <Link to="/Register">Регистрация</Link>
                     </div>
+
                 </AuthForm>
 
             </div>
