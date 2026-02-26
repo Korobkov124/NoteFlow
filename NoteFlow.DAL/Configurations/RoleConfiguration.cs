@@ -13,7 +13,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.HasKey(r => r.Id);
         
         builder.Property(r => r.Id)
-            .HasColumnName("id")
+            .HasColumnName("role_id")
             .ValueGeneratedOnAdd();
         
         builder.Property(r => r.Name)

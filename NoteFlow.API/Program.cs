@@ -1,10 +1,12 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi;
 using Microsoft.EntityFrameworkCore;
 using NoteFlow.BLL.DTO;
 using NoteFlow.BLL.Interfaces;
 using NoteFlow.BLL.Mapping;
 using NoteFlow.BLL.Services;
+using NoteFlow.DAL.Auth;
 using NoteFlow.DAL.Context;
 using NoteFlow.DAL.Entities;
 using NoteFlow.DAL.Interfaces;
@@ -26,6 +28,13 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
 builder.Services.AddScoped<IGenericService<UserDto>, GenericService<User, UserDto>>();
+builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.Configure<JwtOptions>(
+    builder.Configuration.GetSection("JwtOptions"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
