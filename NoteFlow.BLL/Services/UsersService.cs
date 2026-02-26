@@ -1,4 +1,5 @@
 using NoteFlow.BLL.Contracts;
+using NoteFlow.BLL.Exceptions;
 using NoteFlow.DAL.Entities;
 using NoteFlow.DAL.Interfaces;
 
@@ -25,7 +26,7 @@ public class UsersService
         
         if (existingUser != null)
         {
-            throw new Exception($"User with email {model.Email} already exists");
+            throw new UserAlreadyExistException("User with that email already exists");
         }
         
         var existingRole = await _roleRepository.GetByNameAsync("User");
@@ -53,14 +54,14 @@ public class UsersService
 
         if (existingUser == null)
         {
-            throw new Exception("User not found");
+            throw new NotFoundException("User with that email does not exist");
         }
 
         var result = _passwordHasher.VerifyHashedPassword(model.Password, existingUser.Password);
 
         if (!result)
         {
-            throw new Exception("Failed to login");
+            throw new AuthentificationException("Invalid login attempt");
         }
         
         var token = _jwtProvider.GenerateJwtToken(existingUser);

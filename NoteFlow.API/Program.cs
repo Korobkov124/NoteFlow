@@ -11,6 +11,7 @@ using NoteFlow.DAL.Context;
 using NoteFlow.DAL.Entities;
 using NoteFlow.DAL.Interfaces;
 using NoteFlow.DAL.Repositories;
+using NoteFlow.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
