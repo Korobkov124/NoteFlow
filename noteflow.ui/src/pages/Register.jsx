@@ -1,9 +1,8 @@
 import Logo from "/src/assets/logo.png";
 import Background from "/src/assets/login_background.png";
-import { Link } from "react-router-dom";
 import AuthForm from "../components/AuthForm.jsx";
 import "./Login.css"
-const Login = () => {
+const Register = () => {
     return (
         <div className="layout">
             <div className="content">
@@ -14,13 +13,9 @@ const Login = () => {
                 </div>
 
                 <AuthForm title="Авторизация">
+                    <input type="text" placeholder="Имя" />
                     <input type="email" placeholder="Email"/>
-                    <input type="password" placeholder={"Пароль"}/>
-
-                    <div className="linkDiv">
-                        <p>Нет аккаунта?</p>
-                        <Link to="/Register">Регистрация</Link>
-                    </div>
+                    <input type="password" placeholder="Пароль"/>
 
                 </AuthForm>
 
@@ -31,4 +26,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register;
