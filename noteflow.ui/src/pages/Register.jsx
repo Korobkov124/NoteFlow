@@ -12,7 +12,7 @@ const Register = () => {
                     <h1>Note Flow</h1>
                 </div>
 
-                <AuthForm title="Авторизация">
+                <AuthForm title="Регистрация">
                     <input type="text" placeholder="Имя" />
                     <input type="email" placeholder="Email"/>
                     <input type="password" placeholder="Пароль"/>
