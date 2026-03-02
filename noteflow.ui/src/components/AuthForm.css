@@ -32,6 +32,7 @@
 
     background: #028DFF;
     color: white;
+    transition: all 0.2s ease
 }
 
 .authForm input {
@@ -57,7 +58,7 @@
 .authForm input:focus {
     border-color: #2563eb;
     background: white;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    box-shadow: 0 0 0 5px rgba(37,99,235,0.30);
 }
 
 .authForm input::placeholder {
