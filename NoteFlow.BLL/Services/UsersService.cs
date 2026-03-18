@@ -1,5 +1,6 @@
 using NoteFlow.BLL.Contracts;
 using NoteFlow.BLL.Domain.Models;
+using NoteFlow.BLL.DTO;
 using NoteFlow.BLL.Exceptions;
 using NoteFlow.BLL.Interfaces;
 
@@ -74,5 +75,11 @@ public class UsersService
         var token = _jwtProvider.GenerateJwtToken(existingUser, existingRole.Name);
         
         return token;
+    }
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+        var users = await _usersRepository.GetAllAsync();
+        return users;
     }
 }
