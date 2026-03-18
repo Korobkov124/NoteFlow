@@ -13,7 +13,7 @@ public class ColorConfiguration : IEntityTypeConfiguration<ColorEntity>
         builder.HasKey(p => p.Id);
         
         builder.Property(p => p.Id)
-            .HasColumnName("id")
+            .HasColumnName("color_id")
             .ValueGeneratedOnAdd()
             .IsRequired();
         

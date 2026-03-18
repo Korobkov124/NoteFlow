@@ -5,7 +5,7 @@ using NoteFlow.BLL.Services;
 namespace NoteFlow.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly UsersService _usersService;

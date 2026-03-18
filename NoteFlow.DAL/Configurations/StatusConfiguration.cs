@@ -13,7 +13,7 @@ public class StatusConfiguration : IEntityTypeConfiguration<StatusEntity>
         builder.HasKey(t => t.Id);
         
         builder.Property(t => t.Id)
-            .HasColumnName("id")
+            .HasColumnName("status_id")
             .ValueGeneratedOnAdd();
         
         builder.Property(t => t.Name)

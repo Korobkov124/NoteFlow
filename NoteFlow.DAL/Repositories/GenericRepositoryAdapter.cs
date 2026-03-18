@@ -39,7 +39,7 @@ namespace NoteFlow.DAL.Repositories
 
             if (entityType == null)
             {
-                var expectedName = typeof(TDomain).Name + "Model";
+                var expectedName = typeof(TDomain).Name + "Entity";
                 entityType = AppDomain.CurrentDomain.GetAssemblies()
                     .SelectMany(a =>
                     {

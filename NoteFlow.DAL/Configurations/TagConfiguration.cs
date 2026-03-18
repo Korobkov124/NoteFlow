@@ -13,7 +13,7 @@ public class TagConfiguration : IEntityTypeConfiguration<TagEntity>
         builder.HasKey(t => t.Id);
         
         builder.Property(t => t.Id)
-            .HasColumnName("id")
+            .HasColumnName("tag_id")
             .ValueGeneratedOnAdd()
             .IsRequired();
         
@@ -25,7 +25,7 @@ public class TagConfiguration : IEntityTypeConfiguration<TagEntity>
         builder.Property(t => t.ColorId)
             .HasColumnName("fk_color_id")
             .HasColumnType("uuid")
-            .IsRequired();
+            .IsRequired(false);
         
         builder.HasOne(t => t.ColorEntity)
             .WithMany(t => t.Tags)
