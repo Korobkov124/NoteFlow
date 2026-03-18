@@ -1,11 +1,6 @@
-.home{
+.home-content {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.home-content{
-    display: flex;
-    flex-direction: row;
+    justify-content: center;
+    position: relative;
     flex: 1;
 }

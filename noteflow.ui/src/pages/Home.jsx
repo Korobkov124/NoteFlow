@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar.jsx";
-import "./Home.css"
 import CardsGrid from "../components/CardsGrid.jsx";
+import "./Home.css";
 
 const Home = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +14,14 @@ const Home = () => {
             <Header />
 
             <div className="home-content">
-                <CardsGrid />
+                <div className="cards-wrapper">
+                    <CardsGrid />
+                </div>
+
                 <Sidebar isOpen={isOpen} onToggle={toggleOpen} />
             </div>
-
         </div>
-    )
+    );
 }
 
 export default Home;
