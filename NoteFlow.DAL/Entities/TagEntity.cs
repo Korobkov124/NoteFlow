@@ -1,11 +1,11 @@
 namespace NoteFlow.DAL.Entities;
 
-public class Tag
+public class TagEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public Guid ColorId { get; set; }
 
-    public Color Color { get; set; } = null!;
-    public ICollection<Note> Notes { get; set; } = new List<Note>();
+    public ColorEntity ColorEntity { get; set; } = null!;
+    public ICollection<NoteEntity> Notes { get; set; } = new List<NoteEntity>();
 }

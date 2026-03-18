@@ -1,7 +1,7 @@
 using NoteFlow.BLL.Contracts;
+using NoteFlow.BLL.Domain.Models;
 using NoteFlow.BLL.Exceptions;
-using NoteFlow.DAL.Entities;
-using NoteFlow.DAL.Interfaces;
+using NoteFlow.BLL.Interfaces;
 
 namespace NoteFlow.BLL.Services;
 
@@ -64,7 +64,15 @@ public class UsersService
             throw new AuthentificationException("Invalid login attempt");
         }
         
-        var token = _jwtProvider.GenerateJwtToken(existingUser);
+        var existingRole = await _roleRepository.GetByUserIdAsync(existingUser.Id);
+
+        if (existingRole == null)
+        {
+            throw new NotFoundException("Role with that user does not exist");
+        }
+        
+        var token = _jwtProvider.GenerateJwtToken(existingUser, existingRole.Name);
+        
         return token;
     }
 }

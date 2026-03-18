@@ -1,5 +1,3 @@
-using System.Linq.Expressions;
-
 namespace NoteFlow.BLL.Interfaces;
 
 public interface IGenericService<TDto>

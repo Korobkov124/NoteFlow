@@ -1,4 +1,4 @@
-namespace NoteFlow.DAL.Entities;
+namespace NoteFlow.BLL.Domain.Models;
 
 public class Note
 {
@@ -9,8 +9,4 @@ public class Note
     public Guid UserId { get; set; }
     public Guid StatusId { get; set; }
     public DateTime CreatedAt { get; set; }
-
-    public Tag Tag { get; set; }
-    public Status Status { get; set; }
-    public User User { get; set; }
 }

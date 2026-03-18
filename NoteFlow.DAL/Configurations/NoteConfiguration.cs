@@ -4,9 +4,9 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class NoteConfiguration : IEntityTypeConfiguration<Note>
+public class NoteConfiguration : IEntityTypeConfiguration<NoteEntity>
 {
-    public void Configure(EntityTypeBuilder<Note> builder)
+    public void Configure(EntityTypeBuilder<NoteEntity> builder)
     {
         builder.ToTable("notes");
         

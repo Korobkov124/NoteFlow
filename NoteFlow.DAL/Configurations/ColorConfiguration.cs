@@ -4,9 +4,9 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class ColorConfiguration : IEntityTypeConfiguration<Color>
+public class ColorConfiguration : IEntityTypeConfiguration<ColorEntity>
 {
-    public void Configure(EntityTypeBuilder<Color> builder)
+    public void Configure(EntityTypeBuilder<ColorEntity> builder)
     {
         builder.ToTable("colors");
         
@@ -23,7 +23,7 @@ public class ColorConfiguration : IEntityTypeConfiguration<Color>
             .IsRequired();
         
         builder.HasMany(p => p.Tags)
-            .WithOne(t => t.Color)
+            .WithOne(t => t.ColorEntity)
             .HasForeignKey(t => t.ColorId)
             .IsRequired();
     }

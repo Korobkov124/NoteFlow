@@ -1,4 +1,4 @@
-namespace NoteFlow.DAL.Interfaces;
+namespace NoteFlow.BLL.Interfaces;
 
 public interface IPasswordHasher
 {

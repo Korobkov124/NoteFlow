@@ -6,13 +6,13 @@ namespace NoteFlow.DAL.Context;
 public sealed class PgContext : DbContext
 {
     public PgContext(DbContextOptions<PgContext> options) : base(options) { }
-    public DbSet<User> Users { get; set; }
-    public DbSet<Note> Notes { get; set; }
-    public DbSet<Tag> Tags { get; set; }
-    public DbSet<Status> Statuses { get; set; }
-    public DbSet<Role> Roles { get; set; }
-    public DbSet<Friend>  Friends { get; set; }
-    public DbSet<Color> Colors { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
+    public DbSet<NoteEntity> Notes { get; set; }
+    public DbSet<TagEntity> Tags { get; set; }
+    public DbSet<StatusEntity> Statuses { get; set; }
+    public DbSet<RoleEntity> Roles { get; set; }
+    public DbSet<FriendEntity>  Friends { get; set; }
+    public DbSet<ColorEntity> Colors { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

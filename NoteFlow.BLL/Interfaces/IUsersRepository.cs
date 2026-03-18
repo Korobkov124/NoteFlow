@@ -1,7 +1,6 @@
-using System.Linq.Expressions;
-using NoteFlow.DAL.Entities;
+using NoteFlow.BLL.Domain.Models;
 
-namespace NoteFlow.DAL.Interfaces;
+namespace NoteFlow.BLL.Interfaces;
 
 public interface IUsersRepository : IGenericRepository<User>
 {

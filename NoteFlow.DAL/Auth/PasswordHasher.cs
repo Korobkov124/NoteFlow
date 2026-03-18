@@ -1,4 +1,4 @@
-using NoteFlow.DAL.Interfaces;
+using NoteFlow.BLL.Interfaces;
 
 namespace NoteFlow.DAL.Auth;
 

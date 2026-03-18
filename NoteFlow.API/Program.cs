@@ -1,43 +1,19 @@
 using System.Reflection;
-using Microsoft.AspNetCore.Identity;
+using System.Text;
 using Microsoft.OpenApi;
-using Microsoft.EntityFrameworkCore;
-using NoteFlow.BLL.DTO;
-using NoteFlow.BLL.Interfaces;
-using NoteFlow.BLL.Mapping;
-using NoteFlow.BLL.Services;
+using Microsoft.IdentityModel.Tokens;
+using NoteFlow.BLL;
+using NoteFlow.DAL;
 using NoteFlow.DAL.Auth;
-using NoteFlow.DAL.Context;
-using NoteFlow.DAL.Entities;
-using NoteFlow.DAL.Interfaces;
-using NoteFlow.DAL.Repositories;
+using NoteFlow.DAL.Mappers;
 using NoteFlow.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<PgContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
-
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<NoteFlowMappingProfile>();
-});
-
-builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
-builder.Services.AddScoped<IGenericService<UserDto>, GenericService<User, UserDto>>();
-builder.Services.AddScoped<UsersService>();
-builder.Services.AddScoped<IJwtProvider, JwtProvider>();
-builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-builder.Services.Configure<JwtOptions>(
-    builder.Configuration.GetSection("JwtOptions"));
-
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -50,6 +26,35 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Documentation for NoteFlow API"
     });
 });
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
+            ValidAudience = builder.Configuration["JwtOptions:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:SecretKey"]))
+        };
+    });
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDAL(connectionString);
+builder.Services.AddBLL();
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<DalToDomainProfile>();
+});
+
+builder.Services.Configure<JwtOptions>(
+    builder.Configuration.GetSection("JwtOptions"));
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

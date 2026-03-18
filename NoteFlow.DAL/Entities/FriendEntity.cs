@@ -1,11 +1,11 @@
 namespace NoteFlow.DAL.Entities;
 
-public class Friend
+public class FriendEntity
 {
     public Guid UserId { get; set; }
     public Guid FriendId { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public User User { get; set; } = null!;
-    public User FriendUser { get; set; }
+    public UserEntity UserEntity { get; set; } = null!;
+    public UserEntity FriendUserEntity { get; set; }
 }

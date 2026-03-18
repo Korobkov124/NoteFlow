@@ -10,8 +10,4 @@
       <PackageReference Include="AutoMapper" Version="16.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\NoteFlow.DAL\NoteFlow.DAL.csproj" />
-    </ItemGroup>
-
 </Project>

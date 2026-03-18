@@ -5,9 +5,9 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class FriendConfiguration : IEntityTypeConfiguration<Friend>
+public class FriendConfiguration : IEntityTypeConfiguration<FriendEntity>
 {
-    public void Configure(EntityTypeBuilder<Friend> builder)
+    public void Configure(EntityTypeBuilder<FriendEntity> builder)
     {
         builder.ToTable("friends");
         
@@ -28,12 +28,12 @@ public class FriendConfiguration : IEntityTypeConfiguration<Friend>
             .HasColumnType("timestamp")
             .HasDefaultValueSql("now()");
         
-        builder.HasOne(f => f.User)
+        builder.HasOne(f => f.UserEntity)
             .WithMany(u => u.Friends)
             .HasForeignKey(f => f.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.HasOne(f => f.FriendUser)
+        builder.HasOne(f => f.FriendUserEntity)
             .WithMany(u => u.FriendOf)
             .HasForeignKey(f => f.FriendId)
             .OnDelete(DeleteBehavior.Cascade);
