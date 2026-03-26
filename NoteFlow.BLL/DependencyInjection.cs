@@ -10,6 +10,7 @@ public static class DependencyInjection
         services.AddScoped<UsersService>();
         services.AddScoped<NoteService>();
         services.AddScoped<TagService>();
+        services.AddScoped<ColorService>();
         
         return services;
     }
