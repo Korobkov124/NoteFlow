@@ -1,6 +1,7 @@
 using AutoMapper.Configuration.Annotations;
 using NoteFlow.BLL.Contracts;
 using NoteFlow.BLL.Domain.Models;
+using NoteFlow.BLL.DTO;
 using NoteFlow.BLL.Exceptions;
 using NoteFlow.BLL.Interfaces;
 
@@ -9,12 +10,12 @@ namespace NoteFlow.BLL.Services;
 public class NoteService
 {
     private readonly IGenericRepository<Tag> _tagRepository;
-    private readonly IGenericRepository<Note> _noteRepository;
+    private readonly INoteRepository _noteRepository;
     private readonly IStatusRepository _statusRepository;
     
     public NoteService(
         IGenericRepository<Tag> tagRepository,
-        IGenericRepository<Note> noteRepository,
+        INoteRepository noteRepository,
         IStatusRepository statusRepository)
     {
         _tagRepository = tagRepository;
@@ -93,5 +94,16 @@ public class NoteService
         existingNote.StatusId = status.Id;
         
         await _noteRepository.UpdateAsync(existingNote);
+    }
+
+    public async Task<IEnumerable<Note>> GetAllNotes(GetAllNotesRequest model)
+    {
+        var notes = await _noteRepository.GetAllNotesWithUserIdAsync(model.UserId);
+        if (notes == null)
+        {
+            throw new NotFoundException("Notes not found");
+        }
+        
+        return notes;
     }
 }

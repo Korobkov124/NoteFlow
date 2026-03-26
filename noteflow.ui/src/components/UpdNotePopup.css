@@ -1,0 +1,170 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-note {
+    background-color:#E3E3E3;
+    width: 30%;
+    min-height: 200px;
+    border-radius: 5px;
+}
+
+.popup-header-note {
+    border-bottom: 2px solid #BFBEBE;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.popup-note-type-left {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.popup-note-type-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 1rem;
+}
+
+.popup-name-note-content {
+    position: relative;
+    width: 90%;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+.popup-name-note-content input {
+    width: 100%;
+    height: 2.5rem;
+    padding: 0 1rem 0 2.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    background-color:white;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.popup-main-note-content {
+    position: relative;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+.popup-main-note-content textarea {
+    border: none;
+    border-radius: 0.8rem;
+    width: 100%;
+    min-height: 10rem;
+    padding: 0.8rem 2.5rem;
+    box-sizing: border-box;
+    font-family: 'Roboto';
+    font-size: 1rem;
+    resize: none;
+}
+
+.popup-main-footer-note {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 2rem;
+}
+
+.tag {
+    background-color: white;
+    border-radius: 20px;
+    padding: 0.2rem 0.5rem;
+    font-size: 16px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tag-dot {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+}
+
+.orange-tag {
+    background-color: orange;
+}
+
+.green-tag {
+    background-color: green;
+}
+
+.red-tag {
+    background-color: red;
+}
+
+.blue-tag {
+    background-color: #008CFF;
+}
+
+.purple-tag {
+    background-color: #9C00F6;
+}
+
+.footer-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-button button {
+    color: white;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 1.5rem;
+    width: 30%;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.footer-button button:hover {
+    transform: scale(1.15);
+}
+
+.save-btn {
+    background-color: #008CFF;
+}
+
+.cancle-btn {
+    background-color: #969696;
+}
+
+.delete-icon,
+.forward-icon {
+    width: 30px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.delete-icon:hover,
+.forward-icon:hover {
+    transform: scale(1.15);
+}

@@ -49,4 +49,15 @@ public class NoteController : ControllerBase
         await _service.UpdateNote(request);
         return Ok();
     }
+
+    [HttpGet("all")]
+    [Authorize]
+    [ProducesResponseType(typeof(IEnumerable<GetAllNotesRequest>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAll(GetAllNotesRequest request)
+    {
+        await  _service.GetAllNotes(request);
+        return Ok();
+    }
 }

@@ -1,9 +1,9 @@
 import NotePng from "/src/assets/note.png";
 import "./Note.css";
 
-const Note = () => {
+const Note = ({ onClick }) => {
     return (
-        <div className="note">
+        <div className="note" onClick={onClick}>
             <div className="note-content">
 
                 <div className="header-note">

@@ -1,7 +1,7 @@
 import "./Sidebar.css";
 import UsersIcon from "../assets/users.png";
 import PlusIcon from "../assets/plus.png";
-const Sidebar = ({ isOpen, onToggle}) => {
+const Sidebar = ({ isOpen, onToggle, onAddNote }) => {
     return (
         <div className={`sidebar ${isOpen ? "open" : ""}`}>
 
@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, onToggle}) => {
 
             <div className="sidebar-content">
                 <img src={UsersIcon} alt="Users" className="users-icon" />
-                <img src={PlusIcon} alt="Add" className="plus-icon" />
+                <img src={PlusIcon} alt="Add" className="plus-icon" onClick={onAddNote}/>
             </div>
 
         </div>
