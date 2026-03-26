@@ -1,0 +1,54 @@
+.confirm-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    cursor: pointer;
+}
+
+.confirm-popup {
+    background-color:#E3E3E3;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 200px;
+    cursor: default;
+    animation: slideUp 0.3s ease;
+    border: 1px solid #BFBEBE;
+    transform: translate(115px, -130px);
+}
+
+.confirm-popup-content {
+    text-align: left;
+    border-bottom: 1px solid #BFBEBE;
+    padding: 0.5rem;
+}
+
+.confirm-popup-content p {
+    font-size: 1rem;
+    color: #616161;
+    line-height: 1.4;
+}
+
+.confirm-btn {
+    text-align: center;
+}
+
+.confirm-delete-btn {
+    color: red;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.confirm-delete-btn:hover {
+    transform: scale(1.15);
+}

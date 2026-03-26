@@ -1,0 +1,146 @@
+.shared-popup-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.shared-popup-note {
+    background-color:#E3E3E3;
+    width: 20%;
+    min-height: 200px;
+    border-radius: 5px;
+    transform: translate(500px, -85px);
+}
+
+.shared-popup-header-note {
+    border-bottom: 2px solid #BFBEBE;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.shared-popup-note-type-left {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.shared-popup-name-note-content {
+    position: relative;
+    width: 90%;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+.shared-popup-name-note-content input {
+    width: 100%;
+    height: 2.5rem;
+    padding: 0 1rem 0 2.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    background-color:white;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.shared-popup-main-note-content {
+    position: relative;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+.shared-popup-users-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #E5E5E5;
+    background-color: #FAFAFA;
+    border-bottom: 2px solid #BFBEBE;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-row {
+    transition: background-color 0.2s;
+}
+
+.user-row:nth-child(even) {
+    background-color: #E3E3E3;
+}
+
+.user-row:nth-child(odd) {
+    background-color: white;
+}
+
+.user-row:hover {
+    background-color: #F5F5F5;
+}
+
+.user-row td {
+    padding: 0.8rem 0.1rem;
+}
+
+.checkbox-cell {
+    width: 50px;
+    text-align: center;
+}
+
+.checkbox-cell input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.name-cell {
+    font-size: 0.95rem;
+    color: #333;
+    text-align: left;
+}
+
+.shared-footer-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.shared-footer-button button {
+    color: white;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 1.5rem;
+    width: 40%;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.shared-footer-button button:hover {
+    transform: scale(1.15);
+}
+
+.shared-save-btn {
+    background-color: #008CFF;
+}
+
+.shared-cancle-btn {
+    background-color: #969696;
+}
