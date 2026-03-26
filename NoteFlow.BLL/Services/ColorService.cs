@@ -11,7 +11,7 @@ public class ColorService
     {
         _repository = repository;
     }
-
+    
     public async Task<IEnumerable<Color>> GetAll()
     {
         return await _repository.GetAllAsync();
