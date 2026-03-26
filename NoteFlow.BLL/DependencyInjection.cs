@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<NoteService>();
         services.AddScoped<TagService>();
         services.AddScoped<ColorService>();
+        services.AddScoped<FriendService>();
         
         return services;
     }
