@@ -4,16 +4,16 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class StatusConfiguration : IEntityTypeConfiguration<Status>
+public class StatusConfiguration : IEntityTypeConfiguration<StatusEntity>
 {
-    public void Configure(EntityTypeBuilder<Status> builder)
+    public void Configure(EntityTypeBuilder<StatusEntity> builder)
     {
         builder.ToTable("statuses");
         
         builder.HasKey(t => t.Id);
         
         builder.Property(t => t.Id)
-            .HasColumnName("id")
+            .HasColumnName("status_id")
             .ValueGeneratedOnAdd();
         
         builder.Property(t => t.Name)
@@ -22,7 +22,7 @@ public class StatusConfiguration : IEntityTypeConfiguration<Status>
             .IsRequired();
         
         builder.HasMany(t => t.Notes)
-            .WithOne(t => t.Status)
+            .WithOne(t => t.StatusEntity)
             .HasForeignKey(t => t.StatusId)
             .IsRequired();
     }

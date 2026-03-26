@@ -4,16 +4,16 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class TagConfiguration : IEntityTypeConfiguration<Tag>
+public class TagConfiguration : IEntityTypeConfiguration<TagEntity>
 {
-    public void Configure(EntityTypeBuilder<Tag> builder)
+    public void Configure(EntityTypeBuilder<TagEntity> builder)
     {
         builder.ToTable("tags");
         
         builder.HasKey(t => t.Id);
         
         builder.Property(t => t.Id)
-            .HasColumnName("id")
+            .HasColumnName("tag_id")
             .ValueGeneratedOnAdd()
             .IsRequired();
         
@@ -25,15 +25,15 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
         builder.Property(t => t.ColorId)
             .HasColumnName("fk_color_id")
             .HasColumnType("uuid")
-            .IsRequired();
+            .IsRequired(false);
         
-        builder.HasOne(t => t.Color)
+        builder.HasOne(t => t.ColorEntity)
             .WithMany(t => t.Tags)
             .HasForeignKey(t => t.ColorId)
             .IsRequired();
         
         builder.HasMany(t => t.Notes)
-            .WithOne(t => t.Tag)
+            .WithOne(t => t.TagEntity)
             .HasForeignKey(t => t.TagId)
             .IsRequired();
     }

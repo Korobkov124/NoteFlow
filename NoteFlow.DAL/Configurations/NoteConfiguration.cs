@@ -4,16 +4,16 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class NoteConfiguration : IEntityTypeConfiguration<Note>
+public class NoteConfiguration : IEntityTypeConfiguration<NoteEntity>
 {
-    public void Configure(EntityTypeBuilder<Note> builder)
+    public void Configure(EntityTypeBuilder<NoteEntity> builder)
     {
         builder.ToTable("notes");
         
         builder.HasKey(n => n.Id);
         
         builder.Property(n => n.Id)
-            .HasColumnName("id")
+            .HasColumnName("note_id")
             .ValueGeneratedOnAdd();
         
         builder.Property(n => n.Title)
@@ -27,17 +27,17 @@ public class NoteConfiguration : IEntityTypeConfiguration<Note>
             .IsRequired();
         
         builder.Property(n => n.TagId)
-            .HasColumnName("tag_id")
+            .HasColumnName("fk_tag_id")
             .HasColumnType("uuid")
             .IsRequired();
         
         builder.Property(n => n.UserId)
-            .HasColumnName("user_id")
+            .HasColumnName("fk_user_id")
             .HasColumnType("uuid")
             .IsRequired();
         
         builder.Property(n => n.StatusId)
-            .HasColumnName("status_id")
+            .HasColumnName("fk_status_id")
             .HasColumnType("uuid")
             .IsRequired();
         

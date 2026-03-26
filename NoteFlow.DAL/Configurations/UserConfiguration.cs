@@ -4,9 +4,9 @@ using NoteFlow.DAL.Entities;
 
 namespace NoteFlow.DAL.Configurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
         builder.ToTable("users");
 
@@ -41,13 +41,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("avatar_url")
             .HasMaxLength(100);
 
-        builder.HasOne(u => u.Role)
+        builder.HasOne(u => u.RoleEntity)
             .WithMany(r => r.Users)
             .HasForeignKey(u => u.RoleId)
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasMany(u => u.Notes)
-            .WithOne(n => n.User)
+            .WithOne(n => n.UserEntity)
             .HasForeignKey(u => u.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         

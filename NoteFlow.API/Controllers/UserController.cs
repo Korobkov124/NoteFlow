@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using NoteFlow.BLL.DTO;
 using NoteFlow.BLL.Interfaces;
+using NoteFlow.BLL.Services;
 
 namespace NoteFlow.Controllers;
 
 [ApiController]
-[Route("api/user")]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IGenericService<UserDto> _service;
+    private readonly UsersService _service;
     
-    public UserController(IGenericService<UserDto> service)
+    public UserController(UsersService service)
     {
         _service = service;
     }
