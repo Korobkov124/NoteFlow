@@ -23,6 +23,18 @@ public class NoteService
         _statusRepository = statusRepository;
     }
 
+    public async Task<Note> GetNoteById(Guid id)
+    {
+        var note = await _noteRepository.GetByIdAsync(id);
+        
+        if (note == null)
+        {
+            throw new NotFoundException("Note with id: " + id + " not found");
+        }
+        
+        return note;
+    }
+
     public async Task CreateNote(CreateNoteRequest model)
     {
         var existingTag = await _tagRepository.GetByIdAsync(model.tagId);

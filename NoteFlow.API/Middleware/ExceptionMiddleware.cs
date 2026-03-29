@@ -44,6 +44,15 @@ public class ExceptionMiddleware
                     message = ex.Message
                 });
         }
+        catch (BusinessException ex)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(
+                new
+                {
+                    message = ex.Message
+                });
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
