@@ -94,6 +94,9 @@
     font-size: 16px;
     text-align: center;
     white-space: nowrap;
+    transition: 0.2s ease;
+    cursor: pointer;
+    border: none !important;
 }
 
 .tag-dot {
@@ -122,6 +125,23 @@
 
 .purple-tag {
     background-color: #9C00F6;
+}
+
+.tag-line {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    flex-wrap: wrap;
+    margin-left: 2rem;
+}
+
+.tag:hover {
+    transform: scale(1.15);
+}
+
+.tag.active {
+    transform: scale(1.15);
+    border: 2px solid black;
 }
 
 .footer-button {

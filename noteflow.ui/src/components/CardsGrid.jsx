@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getNotes } from "../services/noteService";
 import Note from "../components/Note";
 import UpdNotePopup from "./UpdNotePopup";
 import "./CardsGrid.css"
-const CardsGrid = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-    const handleNoteClick = () => {
+const CardsGrid = ({ tags, colors }) => {
+    const [notes, setNotes] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedNote, setSelectedNote] = useState(null);
+
+    const fetchNotes = async () => {
+        try {
+            const data = await getNotes();
+            setNotes(data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleNoteClick = (note) => {
+        setSelectedNote(note);
         setIsPopupOpen(true);
     };
 
@@ -13,20 +27,28 @@ const CardsGrid = () => {
         setIsPopupOpen(false);
     };
 
+    useEffect(() => {
+        const fetchNotes = async () => {
+            try {
+                const data = await getNotes();
+                setNotes(data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchNotes();
+    }, []);
+
     return (
         <>
             <div className="cards-grid">
-                <Note onClick={handleNoteClick} />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
+                {notes.map((note) => (
+                    <Note key={note.id} note={note} tags={tags} colors={colors} onClick={() => handleNoteClick(note)} />
+                ))}
             </div>
 
-            {isPopupOpen && <UpdNotePopup onClose={closePopup} />}
+            {isPopupOpen && <UpdNotePopup note={selectedNote} onClose={closePopup} onDelete={fetchNotes} />}
         </>
     );
 }

@@ -1,8 +1,59 @@
-import Delete from "../assets/delete.png"
-import Forward from "../assets/forward.png"
+import { useState, useEffect } from "react";
+import { addNote, getTags, getColors } from "../services/noteService";
 import "./UpdNotePopup.css";
 
-const AddNotePopup = ({ onClose }) => {
+const AddNotePopup = ({ onClose, onAdd }) => {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [tags, setTags] = useState([]);
+    const [colors, setColors] = useState([]);
+    const [selectedTag, setSelectedTag] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const tagsData = await getTags();
+                const colorsData = await getColors();
+                setTags(tagsData.tags);
+                setColors(colorsData);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const getColorByTag = (tag) => {
+        if (!Array.isArray(colors) || colors.length === 0) 
+            return null;
+
+        return colors.find(c => c.id === tag.colorId);
+    };
+
+    const getColorClass = (colorName) => {
+        switch (colorName) {
+            case "Red": return "red-tag";
+            case "Green": return "green-tag";
+            case "Blue": return "blue-tag";
+            case "Yellow": return "orange-tag";
+            case "Purple": return "purple-tag";
+            default: return "";
+        }
+    };
+
+    const handleAdd = async () => {
+        try {
+            await addNote(title, content, selectedTag);
+
+            onAdd?.();
+
+            onClose();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const handleOverlayClick = (e) => {
         if (e.target.classList.contains("popup-overlay")) {
             onClose();
@@ -16,33 +67,40 @@ const AddNotePopup = ({ onClose }) => {
 
                     <div className="popup-header-note">
                         <p className="popup-note-type-left">Добавить заметку</p>
-                        <div className="popup-note-type-right">
-                            <img src={Delete} alt="delete" className="delete-icon" />
-                            <img src={Forward} alt="share" className="forward-icon" />
-                        </div>
                     </div>
 
                     <div className="popup-name-note-content">
-                        <input placeholder="Проект" type="text"></input>
+                        <input placeholder="Проект" type="text" value={title}
+                            onChange={(e) => setTitle(e.target.value)} />
                     </div>
 
                     <div className="popup-main-note-content">
-                        <textarea></textarea>
+                        <textarea
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                        />
                     </div>
 
-                    <div className="popup-main-footer-note">
-                        <p>Тэг: 
-                            <span className="tag">Работа</span>
-                            <span className="tag-dot orange-tag"></span>
-                            <span className="tag-dot green-tag"></span>
-                            <span className="tag-dot red-tag"></span>
-                            <span className="tag-dot blue-tag"></span>
-                            <span className="tag-dot purple-tag"></span>
-                        </p>
+                    <div className="tag-line">
+                        <p>Тэг:</p>
+                            {tags.map(tag => (
+                                <span
+                                    key={tag.id}
+                                    className={`tag 
+                                        ${selectedTag === tag.id ? "active" : ""} 
+                                        ${getColorClass(getColorByTag(tag)?.name)}
+                                    `}
+                                    onClick={() => {
+                                        setSelectedTag(tag.id);
+                                    }}
+                                >
+                                    {tag.name}
+                                </span>
+                            ))}
                     </div>
 
                     <div className="footer-button">
-                        <button className="save-btn">Добавить</button>
+                        <button className="save-btn" onClick={handleAdd}>Добавить</button>
                         <button className="cancle-btn" onClick={onClose}>Отмена</button>
                     </div>
 

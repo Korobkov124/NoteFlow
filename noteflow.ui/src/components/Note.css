@@ -27,7 +27,6 @@
 
 .note-type-right {
     color: white;
-    background-color: #FFA033;
     border-radius: 20px;
     padding: 0.2rem 0.5rem;
     font-size: 16px;
@@ -59,4 +58,24 @@
     width: 100%;
     height: auto;
     border-radius: 6px;
+}
+
+.orange-tag {
+    background-color: orange;
+}
+
+.green-tag {
+    background-color: green;
+}
+
+.red-tag {
+    background-color: red;
+}
+
+.blue-tag {
+    background-color: #008CFF;
+}
+
+.purple-tag {
+    background-color: #9C00F6;
 }

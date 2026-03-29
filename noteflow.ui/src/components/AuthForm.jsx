@@ -1,10 +1,10 @@
 import "./AuthForm.css"
-const AuthForm = ({title, children}) => {
+const AuthForm = ({title, children, onSubmit}) => {
     return(
         <div className="authForm">
             <h2>{title}</h2>
             {children}
-            <button type="Submit">Подтвердить</button>
+            <button onClick={onSubmit}>Подтвердить</button>
         </div>
     );
 }

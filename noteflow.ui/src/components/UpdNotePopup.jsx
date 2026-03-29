@@ -1,13 +1,53 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { getColors, getTags, deleteNote } from "../services/noteService";
+import { parseJwt } from "../utils/jwt";
 import Delete from "../assets/delete.png"
 import Forward from "../assets/forward.png"
 import SharedPopup from "./SharedPopup";
 import "./UpdNotePopup.css";
 import "./ConfirmDelPopup.css";
 
-const UpdNotePopup = ({ onClose }) => {
+const UpdNotePopup = ({ note, onClose, onDelete }) => {
     const [showConfirmPopup, setShowConfirmPopup] = useState(false);
     const [showSharedPopup, setShowSharedPopup] = useState(false);
+    const [title, setTitle] = useState(note.title);
+    const [content, setContent] = useState(note.content);
+    const [tags, setTags] = useState([]);
+    const [colors, setColors] = useState([]);
+    const token = localStorage.getItem("token");
+    const user = parseJwt(token);
+    const userEmail =
+    user?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const tagsData = await getTags();
+                const colorsData = await getColors();
+                setTags(tagsData.tags);
+                setColors(colorsData);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const currentTag = tags.find(t => t.id === note?.tagId);
+    const currentColor = colors.find(c => c.id === currentTag?.colorId);
+
+    const getColorClass = (name) => {
+    switch (name) {
+        case "Red": return "red-tag";
+        case "Green": return "green-tag";
+        case "Blue": return "blue-tag";
+        case "Yellow": return "orange-tag";
+        case "Purple": return "purple-tag";
+        default: return "";
+    }
+};
 
     const handleOverlayClick = (e) => {
         if (e.target.classList.contains("popup-overlay")) {
@@ -19,9 +59,15 @@ const UpdNotePopup = ({ onClose }) => {
         setShowConfirmPopup(true);
     };
 
-    const handleConfirmDelete = () => {
-        setShowConfirmPopup(false);
-        onClose();
+    const handleConfirmDelete = async () => {
+        try {
+            await deleteNote(note.id);
+            onDelete?.();
+            setShowConfirmPopup(false);
+            onClose();
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const handleForwardClick = () => {
@@ -53,24 +99,29 @@ const UpdNotePopup = ({ onClose }) => {
                         </div>
 
                         <div className="popup-name-note-content">
-                            <input placeholder="Проект" type="text"></input>
+                            <input
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
                         </div>
 
                         <div className="popup-main-note-content">
-                            <textarea></textarea>
+                            <textarea
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                            />
                         </div>
 
                         <div className="popup-main-footer-note">
                             <p>Тэг: 
-                                <span className="tag">Работа</span>
-                                <span className="tag-dot orange-tag"></span>
-                                <span className="tag-dot green-tag"></span>
-                                <span className="tag-dot red-tag"></span>
-                                <span className="tag-dot blue-tag"></span>
-                                <span className="tag-dot purple-tag"></span>
+                                <span className={`tag ${getColorClass(currentColor?.name)}`}>
+                                    {currentTag?.name || "Без тега"}
+                                </span>
                             </p>
-                            <p>Автор: Кристина Горностаева</p>
-                            <p>Дата: 25.03.2026</p>
+                            <p>Автор: {userEmail}</p>
+                            <p>Дата: {note?.createdAt 
+                            ? new Date(note.createdAt).toLocaleDateString() 
+                            : "—"}</p>
                         </div>
 
                         <div className="footer-button">
