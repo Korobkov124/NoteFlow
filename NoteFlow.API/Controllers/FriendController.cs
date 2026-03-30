@@ -16,7 +16,7 @@ public class FriendController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("{userId}")]
+    [HttpGet("all")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

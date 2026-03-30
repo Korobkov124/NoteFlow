@@ -33,4 +33,5 @@ public class FriendRepository : GenericRepository<Friend, FriendEntity>, IFriend
         
         return _mapper.Map<IEnumerable<Friend>>(entities);
     }
+    
 }
