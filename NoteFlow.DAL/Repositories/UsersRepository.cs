@@ -25,4 +25,11 @@ public class UsersRepository : GenericRepository<User, UserEntity>, IUsersReposi
         
         return _mapper.Map<User>(entity);
     }
+
+    public async Task<User?> GetByUserNameAsync(string userName)
+    {
+        var entity = await _pgContext.Users.FirstOrDefaultAsync(u => u.Name == userName);
+        
+        return _mapper.Map<User>(entity);
+    }
 }

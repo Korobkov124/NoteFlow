@@ -18,6 +18,7 @@ namespace NoteFlow.DAL.Repositories
             _dbSet = context.Set<TEntity>();
             _mapper = mapper;
         }
+
         public async Task<TDomain?> GetByIdAsync(Guid id)
         {
             var entity = await _dbSet.FindAsync(id);
@@ -39,8 +40,23 @@ namespace NoteFlow.DAL.Repositories
 
         public async Task UpdateAsync(TDomain domain)
         {
-            var entity = _mapper.Map<TEntity>(domain);
-            _dbSet.Update(entity);
+            var incomingEntity = _mapper.Map<TEntity>(domain);
+            var keyProperty = typeof(TEntity).GetProperty("Id") ?? typeof(TEntity).GetProperty("NoteId");
+            if (keyProperty == null) throw new Exception("Не найдено свойство первичного ключа 'Id' или 'NoteId'");
+            
+            var idValue = keyProperty.GetValue(incomingEntity);
+            
+            var trackedEntity = await _dbSet.FindAsync(idValue);
+
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).CurrentValues.SetValues(incomingEntity);
+            }
+            else
+            {
+                _dbSet.Update(incomingEntity);
+            }
+
             await _context.SaveChangesAsync();
         }
 

@@ -13,6 +13,7 @@ public sealed class PgContext : DbContext
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<FriendEntity>  Friends { get; set; }
     public DbSet<ColorEntity> Colors { get; set; }
+    public DbSet<NotificationEntity> Notifications { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

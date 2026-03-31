@@ -22,12 +22,12 @@ namespace NoteFlow.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Color", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.ColorEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("color_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -40,7 +40,7 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("colors", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Friend", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.FriendEntity", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -63,12 +63,12 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("friends", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Note", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.NoteEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("note_id");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -81,11 +81,11 @@ namespace NoteFlow.DAL.Migrations
 
                     b.Property<Guid>("StatusId")
                         .HasColumnType("uuid")
-                        .HasColumnName("status_id");
+                        .HasColumnName("fk_status_id");
 
                     b.Property<Guid>("TagId")
                         .HasColumnType("uuid")
-                        .HasColumnName("tag_id");
+                        .HasColumnName("fk_tag_id");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -95,7 +95,7 @@ namespace NoteFlow.DAL.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
-                        .HasColumnName("user_id");
+                        .HasColumnName("fk_user_id");
 
                     b.HasKey("Id");
 
@@ -108,12 +108,54 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("notes", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Role", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.NotificationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("notification_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_read");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("sender_id");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("type");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications", (string)null);
+                });
+
+            modelBuilder.Entity("NoteFlow.DAL.Entities.RoleEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("role_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -126,12 +168,12 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Status", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.StatusEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("status_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -144,14 +186,14 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("statuses", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Tag", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.TagEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("tag_id");
 
-                    b.Property<Guid>("ColorId")
+                    b.Property<Guid?>("ColorId")
                         .HasColumnType("uuid")
                         .HasColumnName("fk_color_id");
 
@@ -168,12 +210,12 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("tags", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.User", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("user_id");
 
                     b.Property<string>("AvatarUrl")
                         .IsRequired()
@@ -213,101 +255,124 @@ namespace NoteFlow.DAL.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Friend", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.FriendEntity", b =>
                 {
-                    b.HasOne("NoteFlow.DAL.Entities.User", "FriendUser")
+                    b.HasOne("NoteFlow.DAL.Entities.UserEntity", "FriendUserEntity")
                         .WithMany("FriendOf")
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NoteFlow.DAL.Entities.User", "User")
+                    b.HasOne("NoteFlow.DAL.Entities.UserEntity", "UserEntity")
                         .WithMany("Friends")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FriendUser");
+                    b.Navigation("FriendUserEntity");
 
-                    b.Navigation("User");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Note", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.NoteEntity", b =>
                 {
-                    b.HasOne("NoteFlow.DAL.Entities.Status", "Status")
+                    b.HasOne("NoteFlow.DAL.Entities.StatusEntity", "StatusEntity")
                         .WithMany("Notes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NoteFlow.DAL.Entities.Tag", "Tag")
+                    b.HasOne("NoteFlow.DAL.Entities.TagEntity", "TagEntity")
                         .WithMany("Notes")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NoteFlow.DAL.Entities.User", "User")
+                    b.HasOne("NoteFlow.DAL.Entities.UserEntity", "UserEntity")
                         .WithMany("Notes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Status");
+                    b.Navigation("StatusEntity");
 
-                    b.Navigation("Tag");
+                    b.Navigation("TagEntity");
+
+                    b.Navigation("UserEntity");
+                });
+
+            modelBuilder.Entity("NoteFlow.DAL.Entities.NotificationEntity", b =>
+                {
+                    b.HasOne("NoteFlow.DAL.Entities.UserEntity", "Sender")
+                        .WithMany("SentNotifications")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NoteFlow.DAL.Entities.UserEntity", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Tag", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.TagEntity", b =>
                 {
-                    b.HasOne("NoteFlow.DAL.Entities.Color", "Color")
+                    b.HasOne("NoteFlow.DAL.Entities.ColorEntity", "ColorEntity")
                         .WithMany("Tags")
                         .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Color");
+                    b.Navigation("ColorEntity");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.User", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.UserEntity", b =>
                 {
-                    b.HasOne("NoteFlow.DAL.Entities.Role", "Role")
+                    b.HasOne("NoteFlow.DAL.Entities.RoleEntity", "RoleEntity")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Role");
+                    b.Navigation("RoleEntity");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Color", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.ColorEntity", b =>
                 {
                     b.Navigation("Tags");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Role", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.RoleEntity", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Status", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.StatusEntity", b =>
                 {
                     b.Navigation("Notes");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.Tag", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.TagEntity", b =>
                 {
                     b.Navigation("Notes");
                 });
 
-            modelBuilder.Entity("NoteFlow.DAL.Entities.User", b =>
+            modelBuilder.Entity("NoteFlow.DAL.Entities.UserEntity", b =>
                 {
                     b.Navigation("FriendOf");
 
                     b.Navigation("Friends");
 
                     b.Navigation("Notes");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("SentNotifications");
                 });
 #pragma warning restore 612, 618
         }

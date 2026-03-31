@@ -1,34 +1,86 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getNotes } from "../services/noteService";
 import Note from "../components/Note";
 import UpdNotePopup from "./UpdNotePopup";
-import "./CardsGrid.css"
-const CardsGrid = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+import "./CardsGrid.css";
 
-    const handleNoteClick = () => {
+const CardsGrid = ({ tags, colors }) => {
+    const [notes, setNotes] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedNote, setSelectedNote] = useState(null);
+
+    const fetchNotes = async () => {
+        const data = await getNotes();
+        setNotes(data);
+    };
+
+    const handleNoteClick = (note) => {
+        setSelectedNote(note);
         setIsPopupOpen(true);
     };
 
     const closePopup = () => {
         setIsPopupOpen(false);
+        setSelectedNote(null);
     };
+
+    const handleUpdateNote = (updatedNote) => {
+
+        setNotes(prevNotes => {
+            // Проверяем, есть ли заметка с таким ID в списке
+            const exists = prevNotes.some(n => n.id === updatedNote.id);
+
+            if (!exists) {
+                return [updatedNote, ...prevNotes];
+            }
+
+            const newNotes = prevNotes.map(n =>
+                n.id === updatedNote.id ? updatedNote : n
+            );
+
+            return newNotes;
+        });
+
+        closePopup();
+    };
+
+    const handleDeleteNote = () => {
+        fetchNotes();
+        closePopup();
+    };
+
+    useEffect(() => {
+        fetchNotes();
+    }, []);
 
     return (
         <>
             <div className="cards-grid">
-                <Note onClick={handleNoteClick} />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
-                <Note />
+                {notes.length === 0 ? (
+                    <p style={{ textAlign: 'center', color: '#888' }}>Заметок пока нет</p>
+                ) : (
+                    notes.map((note) => (
+                        <Note
+                            key={note.id}
+                            note={note}
+                            tags={tags}
+                            colors={colors}
+                            onClick={() => handleNoteClick(note)}
+                        />
+                    ))
+                )}
             </div>
 
-            {isPopupOpen && <UpdNotePopup onClose={closePopup} />}
+            {isPopupOpen && selectedNote && (
+                <UpdNotePopup
+                    note={selectedNote}
+                    onClose={closePopup}
+                    onDelete={handleDeleteNote}
+                    onUpdate={handleUpdateNote}
+                />
+            )}
         </>
     );
-}
+};
 
 export default CardsGrid;

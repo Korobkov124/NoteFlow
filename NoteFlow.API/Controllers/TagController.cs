@@ -15,7 +15,7 @@ public class TagController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

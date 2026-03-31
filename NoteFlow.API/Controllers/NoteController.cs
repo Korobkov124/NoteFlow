@@ -16,6 +16,19 @@ public class NoteController : ControllerBase
         _service = service;
     }
 
+    [HttpGet("{id}")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(
+        [FromRoute] Guid id)
+    {
+        var response =  await _service.GetNoteById(id);
+        return Ok(response);
+    }
+    
+
     [HttpPost("add")]
     [Authorize]
     [ProducesResponseType(typeof(IEnumerable<CreateNoteRequest>), StatusCodes.Status200OK)]
@@ -55,9 +68,9 @@ public class NoteController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<GetAllNotesRequest>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAll(GetAllNotesRequest request)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllNotesRequest request)
     {
-        await  _service.GetAllNotes(request);
-        return Ok();
+        var response = await _service.GetAllNotes(request);
+        return Ok(response);
     }
 }

@@ -1,9 +1,46 @@
+import { useState } from "react";
 import Logo from "/src/assets/logo.png";
 import Background from "/src/assets/login_background.png";
 import { Link } from "react-router-dom";
 import AuthForm from "../components/AuthForm.jsx";
+import { useNavigate } from "react-router-dom";
+import { login } from "../services/authService.js"
 import "./Login.css"
+import { parseJwt } from "../utils/jwt.js";
 const Login = () => {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = async (e) => {
+        try {
+            const token = await login(email, password);
+            localStorage.setItem("token", token);
+            const decodedData = parseJwt(token);
+
+            console.log(decodedData);
+
+            if (decodedData) {
+                const Id = decodedData.Id;
+                const name = decodedData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+                const email = decodedData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+
+                const userData = {
+                    Id: Id,
+                    name: name,
+                    email: email,
+                }
+
+                localStorage.setItem("user", JSON.stringify(userData));
+            }
+            navigate("/home");
+
+        } catch (err) {
+            console.error("Ошибка:", err);
+        }
+    };
+    
     return (
         <div className="layout">
             <div className="content">
@@ -13,9 +50,9 @@ const Login = () => {
                     <h1>Note Flow</h1>
                 </div>
 
-                <AuthForm title="Авторизация">
-                    <input type="email" placeholder="Email"/>
-                    <input type="password" placeholder={"Пароль"}/>
+                <AuthForm title="Авторизация" onSubmit={handleLogin}>
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" placeholder={"Пароль"} value={password} onChange={(e) => setPassword(e.target.value)} />
 
                     <div className="linkDiv">
                         <p>Нет аккаунта?</p>
