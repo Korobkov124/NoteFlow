@@ -2,13 +2,21 @@ import Login from  './pages/Login.jsx'
 import Register from "./pages/Register.jsx";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 const App = () => {
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/Login" />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
-            <Route path="/Home" element={<Home />} />
+            <Route
+                path="/Home"
+                element={
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                }
+            />
         </Routes>
     )
 }

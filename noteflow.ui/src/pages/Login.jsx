@@ -6,6 +6,7 @@ import AuthForm from "../components/AuthForm.jsx";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService.js"
 import "./Login.css"
+import { parseJwt } from "../utils/jwt.js";
 const Login = () => {
     const navigate = useNavigate();
 
@@ -16,6 +17,23 @@ const Login = () => {
         try {
             const token = await login(email, password);
             localStorage.setItem("token", token);
+            const decodedData = parseJwt(token);
+
+            console.log(decodedData);
+
+            if (decodedData) {
+                const Id = decodedData.Id;
+                const name = decodedData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+                const email = decodedData["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+
+                const userData = {
+                    Id: Id,
+                    name: name,
+                    email: email,
+                }
+
+                localStorage.setItem("user", JSON.stringify(userData));
+            }
             navigate("/home");
 
         } catch (err) {
