@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.SignalR;
 using NoteFlow.BLL.Contracts;
 using NoteFlow.BLL.Domain.Models;
 using NoteFlow.BLL.Exceptions;
+using NoteFlow.BLL.Hubs;
 using NoteFlow.BLL.Interfaces;
 
 namespace NoteFlow.BLL.Services;
@@ -9,13 +11,19 @@ public class FriendService
 {
     private readonly IFriendRepository _friendRepository;
     private readonly IUsersRepository _userRepository;
+    private readonly IHubContext<NotificationHub> _hubContext;
+    private readonly INotificationRepository _notificationRepository;
     
     public FriendService(
         IFriendRepository friendRepository,
-        IUsersRepository userRepository)
+        IUsersRepository userRepository,
+        IHubContext<NotificationHub> hubContext,
+        INotificationRepository notificationRepository)
     {
         _friendRepository = friendRepository;
         _userRepository = userRepository;
+        _hubContext = hubContext;
+        _notificationRepository = notificationRepository;
     }
 
     public async Task Follow(AddFriendshipRequest model)
@@ -42,6 +50,30 @@ public class FriendService
         };
 
         await _friendRepository.CreateAsync(entity);
+
+        var notification = new Notification
+        {
+            Id = Guid.NewGuid(),
+            UserId = model.FriendId,
+            SenderId = model.UserId,
+            Type = "SUBSCRIPTION",
+            Message = "подписался на вас!",
+            IsRead = false,
+            CreatedAt = DateTime.Now
+        };
+        
+        var response = new FollowResponse(
+            notification.Id,
+            user.Id,
+            user.Name,
+            notification.Message,
+            notification.CreatedAt,
+            notification.IsRead
+        );
+        
+        await _notificationRepository.CreateAsync(notification); 
+        
+        await _hubContext.Clients.Group($"user_{model.FriendId}").SendAsync("ReceiveNotification", response);
     }
 
     public async Task<IEnumerable<Friend>> GetFriendsAsync(Guid userId)

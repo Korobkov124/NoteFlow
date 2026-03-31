@@ -110,7 +110,6 @@ const UpdNotePopup = ({ note, onClose, onDelete, onUpdate }) => {
         <>
             <div className="popup-overlay" onClick={handleOverlayClick}>
                 <div className="popup-note-modern">
-                    {/* Header */}
                     <div className="popup-header-modern">
                         <h2 className="popup-title">Редактирование</h2>
                         <div className="popup-actions">

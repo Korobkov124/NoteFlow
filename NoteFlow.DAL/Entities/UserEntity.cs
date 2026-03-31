@@ -13,4 +13,6 @@ public class UserEntity
     public ICollection<NoteEntity> Notes { get; set; } = new List<NoteEntity>();
     public ICollection<FriendEntity> Friends { get; set; } = new List<FriendEntity>();
     public ICollection<FriendEntity> FriendOf { get; set; } = new List<FriendEntity>();
+    public ICollection<NotificationEntity> Notifications { get; set; } = new List<NotificationEntity>();
+    public ICollection<NotificationEntity> SentNotifications { get; set; } = new List<NotificationEntity>();
 }

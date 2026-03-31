@@ -28,5 +28,8 @@ public class DalToDomainProfile : Profile
 
         CreateMap<Status, StatusEntity>();
         CreateMap<StatusEntity, Status>();
+
+        CreateMap<Notification, NotificationEntity>();
+        CreateMap<NotificationEntity, Notification>();
     }
 }

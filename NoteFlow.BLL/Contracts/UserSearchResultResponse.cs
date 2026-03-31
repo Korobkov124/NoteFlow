@@ -1,6 +1,3 @@
 namespace NoteFlow.BLL.Contracts;
 
-public class UserSearchResultResponse
-{
-    
-}
+public record UserSearchResultResponse(Guid id, string userName);

@@ -79,31 +79,17 @@ public class NoteService
 
     public async Task UpdateNote(UpdateNoteRequest model)
     {
+        if (model == null || model.noteId == Guid.Empty)
+            throw new ArgumentException("Некорректные данные");
+        
         var existingNote = await _noteRepository.GetByIdAsync(model.noteId);
         
         if (existingNote == null)
-        {
-            throw new NotFoundException("Note with id: " + model.noteId + " not found");
-        }
+            throw new NotFoundException($"Заметка {model.noteId} не найдена");
         
-        var status = await _statusRepository.GetByIdAsync(model.statusId);
-        
-        if (status == null)
-        {
-            throw new NotFoundException("Status with id: " + model.statusId + " not found");
-        }
-        
-        var existingTag = await _tagRepository.GetByIdAsync(model.tagId);
-        
-        if (existingTag == null)
-        {
-            throw new NotFoundException("Tag with id: " + model.tagId + " not found");
-        }
-        
-        existingNote.Title = model.title;
-        existingNote.Content = model.content;
-        existingNote.TagId = model.tagId;
-        existingNote.StatusId = status.Id;
+        existingNote.Title = model.title ?? existingNote.Title;
+        existingNote.Content = model.content ?? existingNote.Content;
+        existingNote.StatusId = Guid.Parse("77f30231-f457-4d93-a885-088e119ff73f");
         
         await _noteRepository.UpdateAsync(existingNote);
     }

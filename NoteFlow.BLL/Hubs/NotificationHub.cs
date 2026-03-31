@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace NoteFlow.Hubs;
+namespace NoteFlow.BLL.Hubs;
 
 public class NotificationHub : Hub
 {

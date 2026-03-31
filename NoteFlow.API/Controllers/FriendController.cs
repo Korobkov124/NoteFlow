@@ -6,7 +6,7 @@ using NoteFlow.BLL.Services;
 namespace NoteFlow.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class FriendController : ControllerBase
 {
     private readonly FriendService _service;
@@ -35,6 +35,6 @@ public class FriendController : ControllerBase
     public async Task<IActionResult> AddFriend(AddFriendshipRequest request)
     {
         await _service.Follow(request);
-        return Ok();
+        return Ok(new { message = "Вы успешно подписались!" });
     }
 }

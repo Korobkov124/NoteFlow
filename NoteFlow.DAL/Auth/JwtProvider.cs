@@ -23,6 +23,7 @@ public class JwtProvider : IJwtProvider
         {
             new Claim("Id", user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Name),
+            new Claim(ClaimTypes.Name, user.Name),
             new Claim(ClaimTypes.Role, role)
         };
         

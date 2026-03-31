@@ -82,4 +82,18 @@ public class UsersService
         var users = await _usersRepository.GetAllAsync();
         return users;
     }
+
+    public async Task<UserSearchResultResponse> GetByNameAsync(UserSearchResultRequest model)
+    {
+        var user = await _usersRepository.GetByUserNameAsync(model.userName);
+
+        if (user == null)
+        {
+            throw new NotFoundException($"User with name {model.userName} not found");
+        }
+
+        var response = new UserSearchResultResponse(user.Id, user.Name);
+
+        return response;
+    }
 }

@@ -5,7 +5,9 @@ using NoteFlow.BLL;
 using NoteFlow.DAL;
 using NoteFlow.DAL.Auth;
 using NoteFlow.DAL.Mappers;
+using NoteFlow.BLL.Hubs;
 using NoteFlow.Middleware;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +16,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // Ваш фронтенд
+            policy.WithOrigins("http://localhost:5173")
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .AllowCredentials();
         });
 });
 
@@ -88,6 +91,8 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.Configure<JwtOptions>(
     builder.Configuration.GetSection("JwtOptions"));
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -100,12 +105,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowFrontend");
-//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllers();
 
